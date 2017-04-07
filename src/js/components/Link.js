@@ -29,7 +29,7 @@ export default class Link {
 		const node = { entity, strength };
 		node.sprite = new PIXI.Sprite(Link.linkTexture);
 		node.sprite.alpha = 0.5;
-		node.sprite.scale.y = 0.5;
+		node.sprite.scale.y = 0.25;
 		node.sprite.anchor.set(0, 0.5);
 
 		const { stage } = sceneManager;
@@ -50,7 +50,7 @@ export default class Link {
 
 		const graphic = new PIXI.Graphics();
 
-		graphic.lineStyle(2, 0xFFFFFF, 1);
+		graphic.lineStyle(4, 0xFFFFFF, 1);
 		graphic.moveTo(0, 0);
 		graphic.lineTo(32, 0);
 
@@ -74,7 +74,7 @@ export default class Link {
 				const { link, display } = node.entity.components;
 
 				if (link && !link.nodes.length) {
-					display.sprite.alpha = 0.3;
+					node.entity.setAlpha(0.3);
 				}
 			}, 3000);
 

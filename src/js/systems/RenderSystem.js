@@ -28,31 +28,30 @@ export default class RenderSystem extends System {
             display.sprite.x = position.x;
             display.sprite.y = position.y;
 
-            if (display.probeSprite) {
-                display.probeSprite.scale.x += dt * 0.01;
-                display.probeSprite.scale.y += dt * 0.01;
+            // Probes
+            if (entity.probeSprites && entity.probeSprites.length) {
+                let destroyed = 0;
 
-                if (display.probeSprite.scale.x > 1) {
-                    display.probeSprite.destroy();
-                    display.probeSprite = null;
-		    entity.resetAlpha();
+                for (let j = 0, jl = entity.probeSprites.length; j < jl; j++) {
+                    const sprite = entity.probeSprites[j];
+
+                    sprite.scale.x += dt * 0.01;
+                    sprite.scale.y += dt * 0.01;
+
+                    if (sprite.scale.x > 1) {
+                        destroyed += 1;
+                        sprite.destroy();
+                    }
+                }
+
+                if (destroyed) {
+                    entity.probeSprites.splice(0, destroyed);
+                }
+
+                if (!entity.probeSprites.length) {
+                    entity.resetAlpha();
                 }
             }
-
-
-            // if (link) {
-            //     for (let j = 0, jl = link.nodes.length; j < jl; j++) {
-            //         const { entity: target, strength, sprite } = link.nodes[j];
-            //         const { position: pos } = target.components;
-
-            //         const deltaX = position.x - pos.x;
-            //         const deltaY = position.y - pos.y;
-
-            //         if (sprite) {
-            //             sprite.rotation = Math.atan2(deltaY - 0.5, deltaX - 0.5);
-            //         }
-            //     }
-            // }
         }
 
         renderer.render(stage);

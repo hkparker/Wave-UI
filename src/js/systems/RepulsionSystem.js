@@ -8,7 +8,7 @@ import Acceleration from 'components/Acceleration';
 // remove this yo
 import Display from 'components/Display';
 
-const REPULSION_CONSTANT = 0.5;
+const REPULSION_CONSTANT = 1;
 const MAX_REPULSION = 0.001;
 const RELPUSION_SPREAD = 2;
 
@@ -30,7 +30,7 @@ export default class ReplusionSystem extends System {
 
             for (let j = 0; j < targets.length; j++) {
                 const target = targets[j];
-                const { position: pos } = target.components;
+                const { position: pos, link } = target.components;
 
                 // same node
                 if (entity === target) {
@@ -38,7 +38,12 @@ export default class ReplusionSystem extends System {
                 }
 
                 const distance = Math.max(position.distanceTo(pos.x, pos.y), 1);
-                const force = Math.min(MAX_REPULSION, (REPULSION_CONSTANT / (distance * distance)));
+                let force = Math.min(MAX_REPULSION, (REPULSION_CONSTANT / (distance * distance)));
+
+                // if in a cluster, extra repulsion
+                if (link) {
+                    force *= 6;
+                }
 
                 const deltaX = position.x - pos.x;
                 const deltaY = position.y - pos.y;

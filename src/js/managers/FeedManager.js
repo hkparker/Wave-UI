@@ -108,7 +108,7 @@ class FeedManager {
 		entityManager.addEntity(device);
 
 		// start with opacity
-		device.components.display.sprite.alpha = 0.3;
+		device.setAlpha(0.3);
 
 		logManager.addLog(`New Device: ${msg.MAC}`);
 	}
@@ -156,8 +156,8 @@ class FeedManager {
 			link2.addLink(entity1);
 
 			// only show now
-			entity1.components.display.sprite.alpha = 1;
-			entity2.components.display.sprite.alpha = 1;
+			entity1.setAlpha(1);
+			entity2.setAlpha(1);
 
 			if (entity1.data.isAP) {
 				entity1.components.display.sprite.tint = 0xFF0000;

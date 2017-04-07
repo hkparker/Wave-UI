@@ -4,7 +4,7 @@ import Position from 'components/Position';
 import Acceleration from 'components/Acceleration';
 import Link from 'components/Link';
 
-const ATTRACTION_CONSTANT = 0.001;
+const ATTRACTION_CONSTANT = 0.0003;
 
 // updates acceleration of all entities using Hooke’s Law; F(m*a) = −kx, F = ma;
 export default class AttractionSystem extends System {

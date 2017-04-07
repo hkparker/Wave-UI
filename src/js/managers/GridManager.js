@@ -11,11 +11,15 @@ class GridManager {
 		this.columns = 0;
 		this.rows = 0;
 
+		this._debug = false;
+
 		this.sprites = {};
 
 		sceneManager.on('resize', () => {
-			this.reset();
-			this.addGrid();
+			if (this._debug) {
+				this.reset();
+				this.addGrid();
+			}
 		})
 	}
 
@@ -129,9 +133,7 @@ class GridManager {
 					}
 				}
 				catch (e) {
-					debugger;
 					console.log('BUT HOW?!?')
-					// debugger;
 				}
 			}
 		}
@@ -142,6 +144,8 @@ class GridManager {
 	// debugging!
 	addGrid() {
 		const { renderer, stage } = sceneManager;
+
+		this._debug = true;
 
 		for (let i = 0, l = this.columns; i < l; i++) {
 			for (let j = 0, jl = this.rows; j < jl; j++) {

@@ -5,7 +5,7 @@ import Acceleration from 'components/Acceleration';
 
 import sceneManager from 'managers/SceneManager';
 
-const ATTRACTION_CONSTANT = 0.0001;
+const ATTRACTION_CONSTANT = 0.0002;
 
 // updates acceleration of all entities towards the center of the screen
 export default class BlackHoleSystem extends System {

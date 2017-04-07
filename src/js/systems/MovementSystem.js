@@ -24,7 +24,7 @@ export default class MovementSystem extends System {
 
         for (let i = 0, l = this.entities.length; i < l; i++) {
             const entity = this.entities[i];
-            const { position, velocity, acceleration } = entity.components;
+            const { position, velocity, acceleration, link } = entity.components;
 
             // accelerate
             if (acceleration) {
@@ -35,8 +35,15 @@ export default class MovementSystem extends System {
                 acceleration.y = 0;
 
                 // friction
-                velocity.x = velocity.x * FRICTION_CONSTANT;
-                velocity.y = velocity.y * FRICTION_CONSTANT;
+                if (!link) {
+                    velocity.x = velocity.x * FRICTION_CONSTANT;
+                    velocity.y = velocity.y * FRICTION_CONSTANT;
+                }
+                // extra friction on link nodes
+                else {
+                    velocity.x = velocity.x * 0.99;
+                    velocity.y = velocity.y * 0.99;
+                }
             }
 
             // max speed

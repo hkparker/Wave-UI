@@ -24,17 +24,17 @@ class Engine {
         await sceneManager.load();
         await gridManager.load();
 
-        await logManager.addTypingLog('Loading Systems...', 25, 50);
+        await logManager.addTypingLog('Loading Systems...', 25, 250);
         await entityManager.load();
 
-        await logManager.addTypingLog('Steaing your wifi...', 25, 250);
+        await logManager.addTypingLog('Steaing your wifi...', 25, 500);
+        gridManager.addGrid();
+
         await feedManager.load();
         await dataManager.load();
     }
 
     start() {
-        gridManager.addGrid();
-
         this.lastTick = window.performance.now();
         requestAnimationFrame(this.update.bind(this));
     }
@@ -68,35 +68,5 @@ document.addEventListener('DOMContentLoaded', function(event) {
         await engine.load();
 
         engine.start();
-        // doStuff();
     })();
 });
-
-function doStuff() {
-    const { width, height } = sceneManager;
-
-    const mainBlob = entityManager.create_blob({
-        pos_x: Math.random() * width,
-        pos_y: Math.random() * height,
-        mass: 5,
-        color: '0xFF0000',
-        size: 10,
-    });
-
-    entityManager.addComponent(mainBlob, new Link());
-
-    for (let i = 0, l = 3; i < l; i++) {
-        const blob = entityManager.create_blob({
-            pos_x: Math.random() * width,
-            pos_y: Math.random() * height,
-            vel_x: Math.random(),
-            vel_y: Math.random(),
-            color: i % 2 === 0 ? '0x6699FF' : '0xFF9966'
-        });
-
-        entityManager.addComponent(blob, new Link());
-        blob.components.link.addLink(mainBlob);
-
-        mainBlob.components.link.addLink(blob);
-    }
-}

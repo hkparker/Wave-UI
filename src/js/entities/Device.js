@@ -17,6 +17,8 @@ export default class Device extends Entity {
 			data = {};
 		}
 
+		this.probeSprites = [];
+
 		const position = new Position({
 			x: data.pos_x || 0,
 			y: data.pos_y || 0,
@@ -109,15 +111,10 @@ export default class Device extends Entity {
 			return console.log('DEVICE SPRITE NOT ADDED YET');
 		}
 
-		if (display.probeSprite) {
-			display.probeSprite.destroy();
-		} else {
-			this._alpha = display.sprite.alpha	
-		}
-
 		display.sprite.alpha = 1
 		const probeSprite = new PIXI.Sprite(Device.probeTexture);
-		display.probeSprite = probeSprite;
+
+		this.probeSprites.push(probeSprite);
 
 		probeSprite.tint = 0x88F3F3;
 		probeSprite.scale.x = 0.1;
@@ -149,17 +146,12 @@ export default class Device extends Entity {
 			return console.log('DEVICE SPRITE NOT ADDED YET');
 		}
 
-		if (display.probeSprite) {
-			display.probeSprite.destroy();
-		} else {
-			this._alpha = display.sprite.alpha	
-		}
-
 		display.sprite.alpha = 1
 		const probeSprite = new PIXI.Sprite(Device.probeTexture);
-		display.probeSprite = probeSprite;
 
-		probeSprite.tint = 0xCCCCCC;
+		this.probeSprites.push(probeSprite);
+
+		probeSprite.tint = 0xFFB413;
 		probeSprite.scale.x = 0.1;
 		probeSprite.scale.y = 0.1;
 		probeSprite.anchor.set(0.5, 0.5);
@@ -174,15 +166,10 @@ export default class Device extends Entity {
 			return console.log('DEVICE SPRITE NOT ADDED YET');
 		}
 
-		if (display.probeSprite) {
-			display.probeSprite.destroy();
-		} else {
-			this._alpha = display.sprite.alpha	
-		}
-
 		display.sprite.alpha = 1
 		const probeSprite = new PIXI.Sprite(Device.probeTexture);
-		display.probeSprite = probeSprite;
+
+		this.probeSprites.push(probeSprite);
 
 		probeSprite.tint = 0xff3000;
 		probeSprite.scale.x = 0.1;
@@ -190,6 +177,11 @@ export default class Device extends Entity {
 		probeSprite.anchor.set(0.5, 0.5);
 
 		display.sprite.addChildAt(probeSprite);
+	}
+
+	setAlpha(alpha) {
+		this.components.display.sprite.alpha = alpha;
+		this._alpha = alpha;
 	}
 
 	resetAlpha() {

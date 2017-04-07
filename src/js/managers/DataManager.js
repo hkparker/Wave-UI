@@ -97,7 +97,6 @@ class DataManager {
 
 		if (target) {
 			this.prettyPrint(target.data, 4)
-			// this.addData(JSON.stringify(target.data));
 			this.selectedEntity = target;
 
 			if (!this.sprite) {
@@ -108,6 +107,9 @@ class DataManager {
 			if (target.components.display) {
 				target.components.display.sprite.addChild(this.sprite);
 			}
+		}
+		else {
+			this.addData('');
 		}
 	}
 
