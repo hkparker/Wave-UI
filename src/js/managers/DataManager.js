@@ -26,6 +26,10 @@ class DataManager {
 
 				sceneManager.container.addEventListener('click', this.onClick.bind(this));
 
+				if (window.location.search === '?hype') {
+					this.frameThreshold = 6;
+				}
+
 				this.data.appendChild(parrotFrames[0]);
 
 				resolve();
