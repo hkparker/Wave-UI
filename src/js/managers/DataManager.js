@@ -2,12 +2,17 @@ import * as PIXI from 'pixi.js';
 import sceneManager from 'managers/SceneManager';
 import gridManager from 'managers/GridManager';
 
+import parrotFrames from 'lib/parrotFrames';
+
 const selector = '.data';
 
 class DataManager {
 	constructor() {
 		this.data = null;
-		this.selectedEntity = null;
+		this.selected = null;
+		this.frame = 0;
+		this.dt = 0;
+		this.frameThreshold = 20;
 	}
 
 	load() {
@@ -21,6 +26,8 @@ class DataManager {
 
 				sceneManager.container.addEventListener('click', this.onClick.bind(this));
 
+				this.data.appendChild(parrotFrames[0]);
+
 				resolve();
 			}, 100);
 		})
@@ -29,13 +36,45 @@ class DataManager {
 		});
 	}
 
+	// updates parrot for the lulz
+	update(dt) {
+		this.dt += dt;
+
+		if (this.selected || this.dt < this.frameThreshold) {
+			return;
+		}
+
+		this.dt = 0;
+		this.frame += 1;
+
+		if (this.frame >= parrotFrames.length) {
+			this.frame -= parrotFrames.length;
+		}
+
+		this.data.innerHTML = '';
+		const html = parrotFrames[this.frame];
+
+		if (window.location.search === '?hype') {
+			html.style.color = "#"+((1<<24)*Math.random()|0).toString(16);
+		}
+
+		return this.data.appendChild(html);
+	}
+
 	addData(html) {
+		this.data.innerHTML = '';
 		this.data.innerHTML = html;
 	}
 
 	prettyPrint(data, spaces) {
 		const elem = this.data;
+
 		elem.innerHTML = '';
+
+		const title = document.createElement('div');
+		title.innerHTML = 'Device Details';
+		title.classList.add('data-title')
+		elem.appendChild(title);
 
 		function print(depth, string) {
 			const row = document.createElement('div');
@@ -91,13 +130,15 @@ class DataManager {
 			}
 		}
 
-		if (this.selectedEntity) {
-			this.selectedEntity.components.display.sprite.removeChild(this.sprite);
+		if (this.selected) {
+			this.selected.components.display.sprite.removeChild(this.sprite);
 		}
 
 		if (target) {
+			this.selected = target;
+
 			this.prettyPrint(target.data, 4)
-			this.selectedEntity = target;
+			this.selected = target;
 
 			if (!this.sprite) {
 				this.sprite = new PIXI.Sprite(DataManager.selectedTexture);
@@ -109,7 +150,7 @@ class DataManager {
 			}
 		}
 		else {
-			this.addData('');
+			this.selected = null;
 		}
 	}
 

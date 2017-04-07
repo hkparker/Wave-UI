@@ -19,19 +19,20 @@ class Engine {
 
     async load() {
         await logManager.load();
-        await logManager.addTypingLog('Initializing...', 25, 250);
+        await logManager.addTypingLog('Initializing...', 25, 500);
 
         await sceneManager.load();
         await gridManager.load();
-
-        await logManager.addTypingLog('Loading Systems...', 25, 250);
         await entityManager.load();
 
-        await logManager.addTypingLog('Steaing your wifi...', 25, 500);
-        gridManager.addGrid();
+        await logManager.addTypingLog('Fetching parrot...', 25, 500);
+        await dataManager.load();
+
+        await logManager.addTypingLog('Steaing your wifi...', 25, 1000);
 
         await feedManager.load();
-        await dataManager.load();
+
+        gridManager.addGrid();
     }
 
     start() {
@@ -47,6 +48,7 @@ class Engine {
 
         while (this.dt >= this.step) {
             gridManager.update();
+            dataManager.update(this.dt);
             entityManager.update(this.dt);
 
             this.dt -= this.step;
