@@ -13,6 +13,7 @@ class DataManager {
 		this.frame = 0;
 		this.dt = 0;
 		this.frameThreshold = 20;
+		this.hype = false;
 	}
 
 	load() {
@@ -24,11 +25,8 @@ class DataManager {
 					reject();
 				}
 
+				this.data.addEventListener('click', this.toggleHype.bind(this));
 				sceneManager.container.addEventListener('click', this.onClick.bind(this));
-
-				if (window.location.search === '?hype') {
-					this.frameThreshold = 6;
-				}
 
 				this.data.appendChild(parrotFrames[0]);
 
@@ -38,6 +36,11 @@ class DataManager {
 		.catch(() => {
 			return this.load();
 		});
+	}
+
+	toggleHype() {
+		this.hype = !this.hype;
+		this.frameThreshold = this.hype ? 6 : 20;
 	}
 
 	// updates parrot for the lulz
@@ -58,8 +61,11 @@ class DataManager {
 		this.data.innerHTML = '';
 		const html = parrotFrames[this.frame];
 
-		if (window.location.search === '?hype') {
+		if (this.hype) {
 			html.style.color = "#"+((1<<24)*Math.random()|0).toString(16);
+		}
+		else {
+			html.style.color = '';
 		}
 
 		return this.data.appendChild(html);
