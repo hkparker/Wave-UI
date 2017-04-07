@@ -82,6 +82,8 @@ export default class Device extends Entity {
 			fill: '#ffffff',
 		});
 		const text = new PIXI.Text(msg.SSID, style);
+		text.anchor.set(0.5, 0.5);
+		text.position.set(0, 10);
 		display.sprite.addChild(text);
 	}
 
@@ -109,8 +111,11 @@ export default class Device extends Entity {
 
 		if (display.probeSprite) {
 			display.probeSprite.destroy();
+		} else {
+			this._alpha = display.sprite.alpha	
 		}
 
+		display.sprite.alpha = 1
 		const probeSprite = new PIXI.Sprite(Device.probeTexture);
 		display.probeSprite = probeSprite;
 
@@ -146,8 +151,11 @@ export default class Device extends Entity {
 
 		if (display.probeSprite) {
 			display.probeSprite.destroy();
+		} else {
+			this._alpha = display.sprite.alpha	
 		}
 
+		display.sprite.alpha = 1
 		const probeSprite = new PIXI.Sprite(Device.probeTexture);
 		display.probeSprite = probeSprite;
 
@@ -157,5 +165,34 @@ export default class Device extends Entity {
 		probeSprite.anchor.set(0.5, 0.5);
 
 		display.sprite.addChildAt(probeSprite);
+	}
+
+	broadcastDeauth(msg) {
+		const { display } = this.components;
+
+		if (!display.sprite) {
+			return console.log('DEVICE SPRITE NOT ADDED YET');
+		}
+
+		if (display.probeSprite) {
+			display.probeSprite.destroy();
+		} else {
+			this._alpha = display.sprite.alpha	
+		}
+
+		display.sprite.alpha = 1
+		const probeSprite = new PIXI.Sprite(Device.probeTexture);
+		display.probeSprite = probeSprite;
+
+		probeSprite.tint = 0xff3000;
+		probeSprite.scale.x = 0.1;
+		probeSprite.scale.y = 0.1;
+		probeSprite.anchor.set(0.5, 0.5);
+
+		display.sprite.addChildAt(probeSprite);
+	}
+
+	resetAlpha() {
+		this.components.display.sprite.alpha = this._alpha
 	}
 }

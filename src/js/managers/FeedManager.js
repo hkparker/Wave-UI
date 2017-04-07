@@ -178,6 +178,8 @@ class FeedManager {
 			return console.log('DEVICE DOESNT EXIST');
 		}
 
+		//entity.ProbedFor = entity.ProbedFor + msg.SSID
+
 		logManager.addLog(`Probing: ${MAC}`);
 		entity.probeRequest(msg);
 	}
@@ -205,7 +207,12 @@ class FeedManager {
 		}
 
 		if (!entityTarget) {
-			return console.log('WE DONT HAVE THE TARGET DEVICE', target, msg);
+			if (target == "ff:ff:ff:ff:ff:ff") {
+				entitySource.broadcastDeauth();
+				return
+			} else {
+				return console.log('WE DONT HAVE THE TARGET DEVICE', target, msg);
+			}
 		}
 
 		let link = entitySource.components.link;

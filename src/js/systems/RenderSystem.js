@@ -35,6 +35,7 @@ export default class RenderSystem extends System {
                 if (display.probeSprite.scale.x > 1) {
                     display.probeSprite.destroy();
                     display.probeSprite = null;
+		    entity.resetAlpha();
                 }
             }
 
