@@ -1,0 +1,71 @@
+body, html {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	background: black;
+	font-family: monospace;
+	font-size: 11px;
+}
+
+.content {
+	display: flex;
+	height: 100%;
+	width: 100%;
+}
+
+.canvas-container {
+	flex: 1;
+}
+
+.panel {
+	display: flex;
+	flex-direction: column;
+	width: 300px;
+	background: #101421;
+	color: #65fa6d;
+
+	.title {
+		height: 40px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 20px;
+	}
+
+	.data {
+		padding: 30px;
+		height: 120px;
+		border-top: 2px solid #65fa6d;
+		white-space: pre-wrap;
+		word-wrap: break-word;
+	}
+
+	.logs {
+		flex: 1;
+		border-top: 2px solid #65fa6d;
+		padding: 10px;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		line-height: 12px;
+		white-space: pre-wrap;
+		word-wrap: break-word;
+
+		div:last-child {
+			display: inline-block;
+
+			&:after {
+				content: '_';
+				display: inline-block;
+				animation: blink 1s step-start 0s infinite;
+			}
+		}
+	}
+}
+
+@keyframes blink {
+	50% {
+		opacity: 0;
+	}
+}
